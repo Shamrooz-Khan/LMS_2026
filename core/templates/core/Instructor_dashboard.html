@@ -1,40 +1,19 @@
-
 {% extends 'core/instructor_base.html' %}
+
 {% block instructor_content %}
-
-<div class="alert-banner" >
-    New courses and assessments must be uploaded by <strong>15 September 2025</strong>.
-</div>
-
-<h4 class="mt-4">Recent Notifications</h4>
-<ul class="list-group">
-    {% for note in request.user.notification_set.all|dictsortreversed:"created_at"|slice:":5" %}
-        <li class="list-group-item small">
-            {{ note.message }}<br>
-            <small class="text-muted">{{ note.created_at|date:"d M Y H:i" }}</small>
-        </li>
-    {% empty %}
-        <li class="list-group-item">No recent notifications.</li>
-    {% endfor %}
-</ul>
-<a href="{% url 'notifications' %}" class="btn btn-link mt-2">View all</a>
-
-{% extends 'core/base.html' %}
-
-{% block title %}Instructor Dashboard{% endblock %}
-
-{% block content %}
 <style>
     body {
         margin: 0;
+        display: flex;
     }
+
     .sidebar {
         height: 100vh;
-        background-color: #2e7d32; /* Green */
+        background-color: #2e7d32;
         color: white;
         padding: 20px;
-        position: fixed;
         width: 250px;
+        position: fixed;
         top: 0;
         left: 0;
     }
@@ -57,12 +36,14 @@
     }
 
     .main-content {
-        margin-left: 260px;
+        margin-left: 250px; /* align with sidebar */
         padding: 20px;
+        flex-grow: 1;
+        width: calc(100% - 250px);
     }
 
     .card-box {
-        background-color: #ffc107; /* Yellow */
+        background-color: #ffc107;
         padding: 20px;
         margin-bottom: 15px;
         border-radius: 5px;
@@ -79,13 +60,15 @@
         text-align: center;
         border-radius: 4px;
         margin-bottom: 20px;
+        width: 100%;
     }
 </style>
 
 <div class="sidebar">
     <h4>E-Learning (Instructor)</h4>
     <a href="{% url 'instructor_dashboard' %}">Home</a>
-    <a href="#">Upload Materials</a>
+    <a href="{% url 'upload_materials' %}">Upload Materials</a>
+    <a href="{% url 'create_course' %}">Create New Course</a>
     <a href="{% url 'instructor_courses' %}"> Courses</a>
     <a href="{% url 'view_feedback' %}">View Feedback</a>
     <a href="{% url 'attendance_home' %}">Attendance</a>
@@ -99,7 +82,6 @@
         New courses and assessments must be uploaded by <strong>15 September 2025</strong>.
     </div>
 
-     <!-- Notifications Start -->
     <h4 class="mt-4">Recent Notifications</h4>
     <ul class="list-group">
         {% for note in request.user.notification_set.all|dictsortreversed:"created_at"|slice:":5" %}
@@ -112,6 +94,5 @@
         {% endfor %}
     </ul>
     <a href="{% url 'notifications' %}" class="btn btn-link mt-2">View all</a>
-    <!-- Notifications End -->
 </div>
 {% endblock %}

@@ -28,9 +28,12 @@ urlpatterns = [
     path('assignments/', views.assignment_page, name='assignment_page'),
     path('books/', views.course_books, name='course_books'),
     path('materials/upload/', views.upload_materials, name='upload_materials'),
-
-
-
-
+    path('courses/create/', views.create_course, name='create_course'),
 
 ]
+
+
+
+
+
+

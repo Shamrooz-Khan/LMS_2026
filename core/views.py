@@ -358,6 +358,25 @@ def upload_materials(request):
 def course_books(request):
     return render(request, 'core/course_books.html')
 
+from .forms import CourseForm  # you'll create this next
+
+@login_required
+def create_course(request):
+    if request.user.role != 'instructor':
+        return redirect('home')
+    
+    if request.method == 'POST':
+        form = CourseForm(request.POST)
+        if form.is_valid():
+            course = form.save(commit=False)
+            course.instructor = request.user
+            course.save()
+            return redirect('instructor_courses')
+    else:
+        form = CourseForm()
+    
+    return render(request, 'core/create_course.html', {'form': form})
+
 @login_required
 def logout_view(request):
     logout(request)
