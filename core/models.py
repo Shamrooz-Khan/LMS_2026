@@ -58,10 +58,13 @@ class Notification(models.Model):
         return f"{self.user.username} – {self.message[:30]}"
     
 class Assignment(models.Model):
-    student = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+    student = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     course = models.ForeignKey(Course, on_delete=models.CASCADE)
     file = models.FileField(upload_to='assignments/')
-    uploaded_at = models.DateTimeField(auto_now_add=True)
+    submitted_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.student.username} - {self.course.title}"
 
 
 

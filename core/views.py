@@ -328,13 +328,18 @@ def feedback_page(request):
     courses = request.user.enrolled_courses.all()
     if request.method == 'POST':
         course_id = request.POST.get('course')
-        message = request.POST.get('message')
+        message = request.POST.get('message')  
         if course_id and message:
             course = Course.objects.get(id=course_id)
-            Feedback.objects.create(student=request.user, course=course, message=message)
+            Feedback.objects.update_or_create(
+                student=request.user,
+                course=course,
+                defaults={'content': message}
+            )
             messages.success(request, "Feedback submitted.")
             return redirect('feedback_page')
     return render(request, 'core/feedback.html', {'courses': courses})
+
 
 @login_required
 def assignment_page(request):
