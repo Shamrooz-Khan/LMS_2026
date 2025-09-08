@@ -22,7 +22,7 @@ def student_dashboard(request):
 
 @login_required
 def instructor_dashboard(request):
-    return render(request, 'instructor_dashboard.html')
+    return render(request, "core/instructor_dashboard.html")
     
 
 def register_view(request):
