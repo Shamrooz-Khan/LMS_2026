@@ -10,6 +10,8 @@ from .models import Attendance
 from datetime import date
 from .models import Feedback
 from .models import Notification  
+from .models import Assignment
+
 
 def home(request):
     return render(request, 'core/home.html')
@@ -20,7 +22,7 @@ def student_dashboard(request):
 
 @login_required
 def instructor_dashboard(request):
-    return render(request, 'core/instructor_dashboard.html')
+    return render(request, 'instructor_dashboard.html')
     
 
 def register_view(request):
